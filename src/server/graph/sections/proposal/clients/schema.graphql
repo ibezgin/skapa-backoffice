@@ -1,0 +1,29 @@
+extend type Query {
+    clients: ClientsQuery!
+}
+extend type Mutation {
+    clients: ClientsMutation!
+}
+type ClientsQuery {
+    allClients: [ClientType!]!
+}
+type ClientsMutation {
+    addClient(data: ClientInput!): Boolean
+    deleteClient(id: String!): Boolean
+    updateClient(id: String!, data: ClientInput!): Boolean
+}
+
+type ClientType {
+    id: String!
+    firstName: String!
+    lastName: String!
+    phone: String!
+    createTime: String!
+}
+
+input ClientInput {
+    firstName: String!
+    lastName: String!
+    phone: String!
+    createTime: String!
+}

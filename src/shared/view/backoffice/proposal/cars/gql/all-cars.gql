@@ -1,0 +1,12 @@
+query AllCars {
+    cars {
+        allCars {
+            id
+            brandId
+            modelId
+            clientId
+            gosNumber
+            color
+        }
+    }
+}

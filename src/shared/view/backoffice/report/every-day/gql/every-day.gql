@@ -1,0 +1,14 @@
+#import "../../../../../gql/fragments/proposal-type.gql"
+
+query ReportEveryDay {
+    reportEveryDay {
+        report {
+            count
+            date
+            proposals {
+                ...proposalType
+            }
+            key
+        }
+    }
+}

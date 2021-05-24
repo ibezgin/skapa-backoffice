@@ -1,0 +1,5 @@
+mutation DeleteModel($id: String!) {
+    models {
+        deleteModel(id: $id)
+    }
+}

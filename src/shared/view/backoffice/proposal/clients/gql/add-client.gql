@@ -1,0 +1,5 @@
+mutation AddClient($data: ClientInput!) {
+    clients {
+        addClient(data: $data)
+    }
+}
