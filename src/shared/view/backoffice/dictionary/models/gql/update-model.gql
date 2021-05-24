@@ -1,0 +1,5 @@
+mutation UpdateModel($id: String!, $title: String!, $brandId: String!) {
+    models {
+        updateModel(id: $id, title: $title, brandId: $brandId)
+    }
+}

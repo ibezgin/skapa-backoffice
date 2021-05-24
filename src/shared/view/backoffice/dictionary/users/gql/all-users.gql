@@ -1,0 +1,12 @@
+query AllUsers {
+    users {
+        allUsers {
+            id
+            firstname
+            lastname
+            username
+            position
+            permission
+        }
+    }
+}

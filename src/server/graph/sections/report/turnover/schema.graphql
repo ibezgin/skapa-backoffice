@@ -1,0 +1,32 @@
+extend type Query {
+    reportTurnover: ReportTurnoverQuery!
+}
+extend type Mutation {
+    reportTurnover: ReportTurnoverMutation!
+}
+type ReportTurnoverQuery {
+    report: ReportTurnoverType
+}
+type ReportTurnoverMutation {
+    reportMutation: ReportTurnoverType
+}
+type ReportTurnoverType {
+    totalAmount: Float
+    data: [TransactionTurnoverByDayType]
+}
+
+type TransactionTurnoverByDayType {
+    date: String!
+    count: Int!
+    dayAmount: Float!
+    transactions: [TransactionsTutnoverType!]!
+    key: String
+}
+
+type TransactionsTutnoverType {
+    key: String
+    proposal: ProposalType
+    id: String
+    amount: Float
+    proposalId: String
+}

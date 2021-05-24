@@ -1,0 +1,20 @@
+extend type Query {
+    carPart: CarPartQuery!
+}
+extend type Mutation {
+    carPart: CarPartMutation!
+}
+type CarPartQuery {
+    allCarParts: [CarPartType!]!
+}
+type CarPartMutation {
+    addCarPart(title: String!, price: Float!): Boolean
+    deleteCarPart(id: String!): Boolean
+    updateCarPart(id: String!, title: String!, price: Float!): Boolean
+}
+
+type CarPartType {
+    id: String!
+    title: String!
+    price: Float!
+}

@@ -1,0 +1,19 @@
+extend type Query {
+    brand: BrandQuery!
+}
+extend type Mutation {
+    brand: BrandMutation!
+}
+type BrandQuery {
+    allBrands: [BrandType!]!
+}
+type BrandMutation {
+    addBrand(title: String!): Boolean
+    deleteBrand(id: String!): Boolean
+    updateBrand(id: String!, title: String!): Boolean
+}
+
+type BrandType {
+    id: String!
+    title: String!
+}

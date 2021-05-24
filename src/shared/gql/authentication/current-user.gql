@@ -1,0 +1,10 @@
+query CurrentUser {
+    authentication {
+        currentUser {
+            id
+            username
+            permission
+            position
+        }
+    }
+}

@@ -1,0 +1,15 @@
+fragment proposalType on ProposalType {
+    id
+    proposal_id
+    createTime
+    changeTime
+    status
+    clientId
+    carId
+    userId
+    proposalReason
+    technicalInspectionResult
+    recomendedWork
+    completedWork
+    key
+}

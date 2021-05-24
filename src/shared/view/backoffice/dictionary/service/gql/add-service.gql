@@ -1,0 +1,5 @@
+mutation AddService($title: String!, $price: Float!) {
+    service {
+        addService(title: $title, price: $price)
+    }
+}

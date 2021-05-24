@@ -1,0 +1,5 @@
+mutation UpdateClient($id: String!, $data: ClientInput!) {
+    clients {
+        updateClient(id: $id, data: $data)
+    }
+}

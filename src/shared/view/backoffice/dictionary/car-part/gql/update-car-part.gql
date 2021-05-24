@@ -1,0 +1,5 @@
+mutation UpdateCarPart($id: String!, $title: String!, $price: Float!) {
+    carPart {
+        updateCarPart(id: $id, title: $title, price: $price)
+    }
+}

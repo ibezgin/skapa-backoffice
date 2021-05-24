@@ -1,0 +1,11 @@
+query AllClients {
+    clients {
+        allClients {
+            id
+            firstName
+            lastName
+            phone
+            createTime
+        }
+    }
+}

@@ -1,0 +1,9 @@
+query AllModels {
+    models {
+        allModels {
+            id
+            brandId
+            title
+        }
+    }
+}
