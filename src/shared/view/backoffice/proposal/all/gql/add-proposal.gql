@@ -1,5 +1,0 @@
-mutation AddProposal($data: ProposalInput!) {
-    proposal {
-        addProposal(data: $data)
-    }
-}

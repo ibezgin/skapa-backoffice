@@ -10,8 +10,6 @@ import "antd/dist/antd.css";
 export const RoutesList = React.memo(() => {
     const routesList = useRoutes();
 
-    const routes: string[] = [];
-
     return (
         <>
             <Switch>

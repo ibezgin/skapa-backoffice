@@ -1,5 +1,0 @@
-mutation AddBrand($title: String!) {
-    brand {
-        addBrand(title: $title)
-    }
-}

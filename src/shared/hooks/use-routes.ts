@@ -2,8 +2,8 @@ import { useMemo, FunctionComponent } from "react";
 import { FileOutlined } from "@ant-design/icons";
 import { AccessEnum } from "../service/enums/access";
 // import { GapPage } from "components/gap-page";
-import { DictionaryUsers } from "view/backoffice/dictionary/users";
-import { DictionaryUsersHeader } from "view/backoffice/dictionary/users/header";
+import { Users } from "view/backoffice/users";
+import { UsersHeader } from "view/backoffice/users/header";
 
 export interface IRoute {
     name: string;
@@ -15,15 +15,6 @@ export interface IRoute {
     access: AccessEnum;
 }
 
-// interface ICategory {
-//     name: string;
-//     path: string;
-//     exact?: boolean;
-//     icon: FunctionComponent;
-//     access: AccessEnum;
-//     children: IRoute[];
-// }
-
 export function useRoutes() {
     return useMemo(
         () =>
@@ -31,11 +22,11 @@ export function useRoutes() {
                 {
                     name: "Пользователи",
                     path: "/users",
-                    component: DictionaryUsers,
+                    component: Users,
                     exact: true,
                     icon: FileOutlined,
                     access: AccessEnum.DICTIONARY_USERS,
-                    header: DictionaryUsersHeader,
+                    header: UsersHeader,
                 },
             ] as IRoute[],
         [],

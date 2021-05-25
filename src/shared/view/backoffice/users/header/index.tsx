@@ -1,10 +1,10 @@
 import { Button, Col, Row } from "antd";
 import _ from "lodash";
 import React from "react";
-import { ModalForm } from "../../../../../components/modal-form";
+import { ModalForm } from "./../../../../components/modal-form";
 import { useUsersHelper } from "../helper";
 
-export const DictionaryUsersHeader = React.memo(() => {
+export const UsersHeader = React.memo(() => {
     const { sendAddUser, loadingMutation, formFields } = useUsersHelper();
 
     return (

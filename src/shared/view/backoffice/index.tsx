@@ -4,7 +4,6 @@ import { BackofficeMenu } from "./menu";
 import React from "react";
 import { HeaderWrapper } from "../../components/header";
 import { SC } from "./styled";
-import logo from "../../assets/logo.png";
 
 const { Sider, Content } = Layout;
 
