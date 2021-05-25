@@ -14,7 +14,7 @@ const UserInfo = styled.div`
 const Header = styled.div`
     display: flex;
     width: 100%;
-    padding: 16px 0px 16px;
+    padding: 12px 0px 12px;
     align-items: center;
     & > :nth-child(1) {
         width: 295px;

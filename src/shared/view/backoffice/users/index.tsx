@@ -25,7 +25,6 @@ export const Users = React.memo(() => {
         formFields,
         sendDeleteUser,
         sendUpdateUser,
-        positions,
     } = useUsersHelper();
 
     const columns = useMemo(
@@ -35,20 +34,13 @@ export const Users = React.memo(() => {
                 dataIndex: "firstname",
             },
             {
-                title: "Фамилия",
-                dataIndex: "lastname",
-            },
-            {
                 title: "Логин",
                 dataIndex: "username",
             },
             {
-                title: "Должность",
-                dataIndex: "position",
-                render: (position: any) =>
-                    positions.find(elem => elem.value === position)?.label,
+                title: "Админ",
+                dataIndex: "isAdmin",
             },
-
             {
                 title: "",
                 dataIndex: "edit",
@@ -95,13 +87,7 @@ export const Users = React.memo(() => {
                 ),
             },
         ],
-        [
-            formFields,
-            positions,
-            sendDeleteUser,
-            sendUpdateUser,
-            styleUtils.cursorPointer,
-        ],
+        [formFields, sendDeleteUser, sendUpdateUser, styleUtils.cursorPointer],
     );
 
     const loading = allUsersQuery.loading || loadingMutation;
