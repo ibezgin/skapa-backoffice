@@ -1,7 +1,7 @@
 import { SubSchema } from "graph/sub-schema";
 import schema from "./schema.graphql";
 
-export const dictionaryUsersSubSchema = new SubSchema(schema, {
+export const usersSubSchema = new SubSchema(schema, {
     Query: {
         users: () => ({}),
     },
