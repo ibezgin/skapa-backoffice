@@ -22,7 +22,7 @@ export const AppTemplate = React.memo((props: IProps) => {
                 onCollapse={() => setCollapsed(value => !value)}
             >
                 <div className="logo">
-                    {!collapsed ? "SPAPA.PROMOCODE" : "SKAPA"}
+                    {!collapsed ? "SKAPA.PROMOCODE" : "SKAPA"}
                 </div>
                 <BackofficeMenu />
             </Sider>
