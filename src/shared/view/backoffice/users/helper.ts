@@ -10,7 +10,6 @@ import {
 } from "gql/types/operation-result-types";
 import { Specialization } from "service/enums/specialization";
 import { IFormField } from "./../../../components/modal-form";
-import { useAccess } from "./../../../hooks/use-access";
 import { useMutationOptions } from "./../../../hooks/use-mutation-options";
 import { errorHandler } from "./../../../service/utils/error-handler";
 import ADD_USER from "./gql/add-user.gql";
@@ -18,8 +17,6 @@ import DELETE_USER from "./gql/delete-user.gql";
 import UPDATE_USER from "./gql/update-user.gql";
 
 export function useUsersHelper() {
-    const access = useAccess();
-
     const positions = [
         {
             value: Specialization.ADMIN,
@@ -41,18 +38,7 @@ export function useUsersHelper() {
             type: "textField",
         },
         {
-            title: "Фамилия",
-            name: "lastname",
-            type: "textField",
-        },
-        {
-            title: "Специализация",
-            name: "position",
-            type: "selectField",
-            options: positions,
-        },
-        {
-            title: "Имя пользователя",
+            title: "Логин",
             name: "username",
             type: "textField",
         },
@@ -62,10 +48,9 @@ export function useUsersHelper() {
             type: "passwordField",
         },
         {
-            title: "Тест доступы",
-            name: "permission",
-            type: "treeField",
-            treeData: access,
+            title: "Админ",
+            name: "isAdmin",
+            type: "switchField",
         },
     ] as IFormField[];
 

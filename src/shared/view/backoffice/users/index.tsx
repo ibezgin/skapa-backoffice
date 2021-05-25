@@ -1,6 +1,6 @@
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useQuery } from "@apollo/client";
-import { Modal, Table } from "antd";
+import { Col, Modal, Row, Table } from "antd";
 import React, { useMemo } from "react";
 import { useStyleUtils } from "./../../../hooks/use-style-utils";
 import { useUsersHelper } from "./helper";
@@ -8,6 +8,7 @@ import { ModalForm } from "./../../../components/modal-form";
 import ALL_USERS from "./gql/all-users.gql";
 import _ from "lodash";
 import { AllUsers } from "gql/types/operation-result-types";
+import { useUser } from "hooks/use-user";
 
 const { confirm } = Modal;
 
@@ -19,6 +20,8 @@ export const Users = React.memo(() => {
     const allUsers = useMemo(() => allUsersQuery.data?.users.allUsers || [], [
         allUsersQuery.data?.users.allUsers,
     ]);
+
+    const userInfo = useUser();
 
     const {
         loadingMutation,
@@ -40,54 +43,69 @@ export const Users = React.memo(() => {
             {
                 title: "Админ",
                 dataIndex: "isAdmin",
+                render: () => <span className="plus"></span>,
             },
             {
                 title: "",
                 dataIndex: "edit",
                 render: (_edit: any, record: any) => (
                     <>
-                        <ModalForm
-                            onSubmit={values => {
-                                sendUpdateUser(
-                                    record.id,
-                                    _.pick(
-                                        values,
-                                        "firstname",
-                                        "username",
-                                        "position",
-                                        "password",
-                                        "lastname",
-                                        "permission",
-                                    ),
-                                );
-                                values.setVisible();
-                            }}
-                            formFields={formFields}
-                            edit={record}
-                        >
-                            {setVisible => (
-                                <EditOutlined
-                                    style={styleUtils.cursorPointer}
-                                    onClick={() => setVisible(true)}
-                                />
-                            )}
-                        </ModalForm>
-                        <DeleteOutlined
-                            style={styleUtils.cursorPointer}
-                            onClick={() => {
-                                confirm({
-                                    title: `Подтвердите удаление [${record.username}]`,
-                                    onOk: () => {
-                                        sendDeleteUser(record.id);
-                                    },
-                                });
-                            }}
-                        />
+                        {userInfo.username !== record.username && (
+                            <Row>
+                                <Col span={6}>
+                                    <ModalForm
+                                        onSubmit={values => {
+                                            sendUpdateUser(
+                                                record.id,
+                                                _.pick(
+                                                    values,
+                                                    "firstname",
+                                                    "username",
+                                                    "position",
+                                                    "password",
+                                                    "lastname",
+                                                    "permission",
+                                                ),
+                                            );
+                                            values.setVisible();
+                                        }}
+                                        formFields={formFields}
+                                        edit={record}
+                                    >
+                                        {setVisible => (
+                                            <EditOutlined
+                                                style={styleUtils.cursorPointer}
+                                                onClick={() => setVisible(true)}
+                                            />
+                                        )}
+                                    </ModalForm>
+                                </Col>{" "}
+                                <Col>
+                                    <DeleteOutlined
+                                        style={styleUtils.cursorPointer}
+                                        onClick={() => {
+                                            confirm({
+                                                title: `Подтвердите удаление [${record.username}]`,
+                                                onOk: () => {
+                                                    sendDeleteUser(record.id);
+                                                },
+                                            });
+                                        }}
+                                    />{" "}
+                                </Col>
+                            </Row>
+                        )}
                     </>
                 ),
             },
         ],
-        [formFields, sendDeleteUser, sendUpdateUser, styleUtils.cursorPointer],
+        [
+            formFields,
+            sendDeleteUser,
+            sendUpdateUser,
+            styleUtils.cursorPointer,
+            userInfo.username,
+        ],
     );
 
     const loading = allUsersQuery.loading || loadingMutation;
