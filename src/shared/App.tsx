@@ -23,7 +23,7 @@ const App: React.FC<any> = () => {
                         href: favicon,
                     },
                 ]}
-                title={"Service.Auto"}
+                title={"SKAPA.PROMOCODE"}
             />
             <RoutesList />
         </>

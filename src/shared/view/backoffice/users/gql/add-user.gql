@@ -1,0 +1,5 @@
+mutation AddUser($data: UserInput) {
+    users {
+        addUser(data: $data)
+    }
+}

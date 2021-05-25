@@ -33,7 +33,7 @@ export const LoginPage = React.memo(() => {
         <Layout style={{ height: "100vh" }}>
             <Layout className="site-layout">
                 <SC.LoginForm>
-                    <h2 style={{ textAlign: "center" }}>Service.Auto</h2>
+                    <h2 style={{ textAlign: "center" }}>SKAPA.PROMOCODE</h2>
 
                     <Formik
                         initialValues={{
