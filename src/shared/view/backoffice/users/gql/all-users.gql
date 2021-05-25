@@ -3,10 +3,8 @@ query AllUsers {
         allUsers {
             id
             firstname
-            lastname
             username
-            position
-            permission
+            isAdmin
         }
     }
 }

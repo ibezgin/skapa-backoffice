@@ -8,7 +8,7 @@ type UsersQuery {
     allUsers: [UserType]
 }
 type UsersMutation {
-    addUser(data: UserInput): Boolean
+    addUser(data: UserInput!): Boolean
     deleteUser(id: String!): Boolean
     updateUser(id: String!, data: UserInput!): Boolean
 }
@@ -16,17 +16,13 @@ type UsersMutation {
 type UserType {
     id: String!
     firstname: String!
-    lastname: String!
     username: String!
-    permission: JSON
-    position: String!
+    isAdmin: Boolean
 }
 
 input UserInput {
     firstname: String!
-    lastname: String!
     username: String!
     password: String
-    permission: JSON
-    position: String!
+    isAdmin: Boolean!
 }

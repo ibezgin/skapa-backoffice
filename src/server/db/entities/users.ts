@@ -6,18 +6,15 @@ export interface IUsers extends Document {
     lastname: string;
     username: string;
     password: string;
-    position: string;
-    permission: any;
+    isAdmin: boolean;
 }
 
 const schema: Schema = new Schema(
     {
         firstname: String,
-        lastname: String,
         username: { type: String, unique: true },
         password: String,
-        position: String,
-        permission: JSON,
+        isAdmin: Boolean,
     },
     { collection: "users" },
 );

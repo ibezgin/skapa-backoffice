@@ -9,6 +9,7 @@ import ALL_USERS from "./gql/all-users.gql";
 import _ from "lodash";
 import { AllUsers } from "gql/types/operation-result-types";
 import { useUser } from "hooks/use-user";
+import { PlusMinus } from "components/plus-minus";
 
 const { confirm } = Modal;
 
@@ -43,7 +44,7 @@ export const Users = React.memo(() => {
             {
                 title: "Админ",
                 dataIndex: "isAdmin",
-                render: () => <span className="plus"></span>,
+                render: (isAdmin: boolean) => <PlusMinus value={isAdmin} />,
             },
             {
                 title: "",
@@ -61,10 +62,8 @@ export const Users = React.memo(() => {
                                                     values,
                                                     "firstname",
                                                     "username",
-                                                    "position",
                                                     "password",
-                                                    "lastname",
-                                                    "permission",
+                                                    "isAdmin",
                                                 ),
                                             );
                                             values.setVisible();

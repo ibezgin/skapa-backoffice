@@ -12,15 +12,12 @@ export const UsersHeader = React.memo(() => {
             <ModalForm
                 onSubmit={(values, { resetForm }) => {
                     sendAddUser(
-                        _.pick(
-                            values,
+                        _.pick(values, [
                             "firstname",
                             "username",
                             "password",
-                            "position",
-                            "lastname",
-                            "permission",
-                        ),
+                            "isAdmin",
+                        ]),
                     );
                     values.setVisible();
                     resetForm();

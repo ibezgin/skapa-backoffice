@@ -1,4 +1,4 @@
-mutation AddUser($data: UserInput) {
+mutation AddUser($data: UserInput!) {
     users {
         addUser(data: $data)
     }
