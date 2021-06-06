@@ -1,0 +1,30 @@
+extend type Query {
+    promoCodes: PromoCodeQuery!
+}
+extend type Mutation {
+    promoCodesss: PromoCodeMutation!
+}
+type PromoCodeQuery {
+    all(count: Int, offset: Int): [PromoCodeType]
+}
+
+type PromoCodeMutation {
+    add(data: PromoCodeInput!): Boolean
+}
+
+type PromoCodeType {
+    id: String
+    name: String
+    sale: String
+    createdAt: String
+    adminId: String
+    used: Boolean
+    QRCodeId: String
+}
+
+input PromoCodeInput {
+    name: String
+    sale: String
+    adminId: String
+    QRCode: String
+}
