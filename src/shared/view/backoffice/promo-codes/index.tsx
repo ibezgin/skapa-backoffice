@@ -5,11 +5,13 @@ import React, { useMemo } from "react";
 export const PromoCodes = React.memo(() => {
     const columns: ColumnsType = useMemo(
         () => [
-            { dataIndex: "id", title: "ID" },
             { dataIndex: "name", title: "Имя" },
-            { dataIndex: "sale", title: "Скидка" },
-            { dataIndex: "createdAt", title: "Дата создания" },
-            { dataIndex: "qr", title: "QR" },
+            { dataIndex: "sale", title: "Скидка (%)" },
+            {
+                dataIndex: "createdAt",
+                title: "Дата создания (в текущем часовом поясе)",
+            },
+            { dataIndex: "qr", title: "Qr" },
             { dataIndex: "adminId", title: "Создатель" },
             { dataIndex: "edit", title: "" },
         ],

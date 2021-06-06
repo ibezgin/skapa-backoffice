@@ -1,10 +1,10 @@
 import { useMemo, FunctionComponent } from "react";
 import { UserOutlined, GiftOutlined } from "@ant-design/icons";
 import { AccessEnum } from "../service/enums/access";
-// import { GapPage } from "components/gap-page";
 import { Users } from "view/backoffice/users";
 import { UsersHeader } from "view/backoffice/users/header";
 import { PromoCodes } from "view/backoffice/promo-codes";
+import { PromoCodesHeader } from "view/backoffice/promo-codes/header";
 
 export interface IRoute {
     name: string;
@@ -36,7 +36,7 @@ export function useRoutes() {
                     exact: true,
                     icon: GiftOutlined,
                     access: AccessEnum.DICTIONARY_USERS,
-                    header: UsersHeader,
+                    header: PromoCodesHeader,
                 },
             ] as IRoute[],
         [],

@@ -75,6 +75,7 @@
         "mongoose": "^5.11.11",
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
+        "qrcode.react": "^1.0.1",
         "query-string": "^6.13.7",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
@@ -95,7 +96,8 @@
         "styled-normalize": "^8.0.7",
         "typeorm": "0.2.20",
         "url-join": "^4.0.1",
-        "uuid": "^8.3.1"
+        "uuid": "^8.3.1",
+        "voucher-code-generator": "^1.1.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
@@ -149,6 +151,7 @@
         "@types/rimraf": "^3.0.0",
         "@types/styled-components": "^5.1.4",
         "@types/terser-webpack-plugin": "^3.0.0",
+        "@types/voucher-code-generator": "^1.1.0",
         "@types/webpack": "^4.41.12",
         "@types/webpack-dev-middleware": "^3.7.0",
         "@types/webpack-env": "^1.15.2",
