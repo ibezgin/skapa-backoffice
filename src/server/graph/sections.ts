@@ -6,8 +6,13 @@ import { mergeResolvers } from "@graphql-tools/merge";
 import { mergeTypeDefs } from "@graphql-tools/merge";
 import { authenticationSubSchema } from "./auth";
 import { usersSubSchema } from "./sections/users";
+import { promoCodesSubSchema } from "./sections/promocodes";
 
-export const sections: SubSchema[] = [usersSubSchema, authenticationSubSchema];
+export const sections: SubSchema[] = [
+    usersSubSchema,
+    authenticationSubSchema,
+    promoCodesSubSchema,
+];
 
 export const schemas: SubSchema[] = [...sections, querySubSchema];
 

@@ -4,6 +4,16 @@ import React, { ReactNode, useState } from "react";
 import * as FormikAntd from "formik-antd";
 import QrCode from "qrcode.react";
 import { useGenerateCode } from "hooks/use-generate-tempory-code";
+import { ApolloError, useMutation } from "@apollo/client";
+import {
+    AddPromocode,
+    AddPromocodeVariables,
+    PromoCodeInput,
+} from "gql/types/operation-result-types";
+import ADD_PROMOCODE from "../gql/add-promocode.gql";
+import { useMutationOptions } from "hooks/use-mutation-options";
+import { errorHandler } from "service/utils/error-handler";
+import { useUser } from "hooks/use-user";
 
 const { Title } = Typography;
 
@@ -17,12 +27,28 @@ export const PromoCodesModal = React.memo((props: IProps) => {
 
     const { generateTemporyCode, generatePromoCode } = useGenerateCode();
 
+    const { execute: addPromocode, loading } = useAddPromocodeMutation();
+
+    const user = useUser();
+
     return (
         <Formik
             initialValues={{ name: "", sale: "", qr: "" }}
             enableReinitialize={true}
-            onSubmit={() => {
-                // some code
+            onSubmit={async (values, { resetForm }) => {
+                const addResult = await addPromocode({
+                    name: values.name,
+                    sale: String(values.sale),
+                    QRCode: values.qr,
+                    adminId: user.username,
+                });
+
+                if (addResult) {
+                    resetForm();
+                    setVisible(false);
+                }
+
+                resetForm();
             }}
         >
             {({ values, setFieldValue, resetForm }) => {
@@ -108,7 +134,7 @@ export const PromoCodesModal = React.memo((props: IProps) => {
                                     Сгенерировать QR код
                                 </Button>
                                 <FormikAntd.SubmitButton
-                                    loading={false}
+                                    loading={loading}
                                     block={true}
                                 >
                                     Сохранить
@@ -122,3 +148,31 @@ export const PromoCodesModal = React.memo((props: IProps) => {
         </Formik>
     );
 });
+
+function useAddPromocodeMutation() {
+    const options = useMutationOptions();
+
+    const [mutation, { loading }] = useMutation<
+        AddPromocode,
+        AddPromocodeVariables
+    >(ADD_PROMOCODE, {
+        ...options,
+        onError: (error: ApolloError) => {
+            errorHandler(error);
+        },
+        refetchQueries: ["AllPromocodes"],
+    });
+
+    return {
+        execute: async (data: PromoCodeInput) => {
+            const result = await mutation({
+                variables: {
+                    data,
+                },
+            });
+
+            return result.data?.promoCodes.add;
+        },
+        loading,
+    };
+}

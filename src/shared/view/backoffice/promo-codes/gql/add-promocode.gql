@@ -1,0 +1,5 @@
+mutation AddPromocode($data: PromoCodeInput!) {
+    promoCodes {
+        add(data: $data)
+    }
+}

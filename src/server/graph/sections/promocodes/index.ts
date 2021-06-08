@@ -1,7 +1,7 @@
 import { SubSchema } from "graph/sub-schema";
 import schema from "./schema.graphql";
 
-export const usersSubSchema = new SubSchema(schema, {
+export const promoCodesSubSchema = new SubSchema(schema, {
     Query: {
         promoCodes: () => ({}),
     },
@@ -13,12 +13,7 @@ export const usersSubSchema = new SubSchema(schema, {
             await helpers.sections.promocodes.getAll(count, offset),
     },
     PromoCodesMutation: {
-        add: async (_obj, { name, sale, adminId, QRCode }, { helpers }) =>
-            await helpers.sections.promocodes.add({
-                name,
-                sale,
-                adminId,
-                QRCode,
-            }),
+        add: async (_obj, { data }, { helpers }) =>
+            await helpers.sections.promocodes.add(data),
     },
 });

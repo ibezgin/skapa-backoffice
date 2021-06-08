@@ -1,15 +1,20 @@
 extend type Query {
-    promoCodes: PromoCodeQuery!
+    promoCodes: PromoCodesQuery!
 }
 extend type Mutation {
-    promoCodesss: PromoCodeMutation!
+    promoCodes: PromoCodesMutation!
 }
-type PromoCodeQuery {
-    all(count: Int, offset: Int): [PromoCodeType]
+type PromoCodesQuery {
+    all(count: Int, offset: Int): AllPromoCodeType
 }
 
-type PromoCodeMutation {
+type PromoCodesMutation {
     add(data: PromoCodeInput!): Boolean
+}
+
+type AllPromoCodeType {
+    data: [PromoCodeType!]!
+    count: Float!
 }
 
 type PromoCodeType {

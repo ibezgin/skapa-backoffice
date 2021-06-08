@@ -12,7 +12,7 @@ interface IProps {
 }
 
 export const AppTemplate = React.memo((props: IProps) => {
-    const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [collapsed, setCollapsed] = useState<boolean>(true);
 
     return (
         <Layout>

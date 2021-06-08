@@ -1,14 +1,19 @@
+import QRCode from "react-qr-code";
 import { AbstractRequestContextHelper } from "../../abstract-request-context-helper";
 
 export class PromoCodesContextHelper extends AbstractRequestContextHelper {
     public async getAll(count: number, offset: number) {
-        return await this.context.helpers.rest.get({
+        const data = await this.context.helpers.rest.get({
             path: "/promo-code/get-all",
             params: {
                 count,
                 offset,
             },
         });
+
+        console.log(data);
+
+        return data;
     }
 
     public async delete(id: string) {
@@ -37,9 +42,10 @@ export class PromoCodesContextHelper extends AbstractRequestContextHelper {
         adminId: string;
         QRCode: string;
     }) {
+        // console.log(data);
         return await await this.context.helpers.rest.post({
             path: "/promo-code/add",
-            data,
+            data: { ...data, QRCodeId: data.QRCode },
         });
     }
 }

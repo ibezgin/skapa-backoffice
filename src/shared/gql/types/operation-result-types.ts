@@ -8,20 +8,20 @@
 // ====================================================
 
 export interface CurrentUser_authentication_currentUser {
-  __typename: "LoginType";
-  id: string | null;
-  username: string | null;
-  permission: any | null;
-  position: string | null;
+    __typename: "LoginType";
+    id: string | null;
+    username: string | null;
+    permission: any | null;
+    position: string | null;
 }
 
 export interface CurrentUser_authentication {
-  __typename: "AuthenticationQuery";
-  currentUser: CurrentUser_authentication_currentUser | null;
+    __typename: "AuthenticationQuery";
+    currentUser: CurrentUser_authentication_currentUser | null;
 }
 
 export interface CurrentUser {
-  authentication: CurrentUser_authentication;
+    authentication: CurrentUser_authentication;
 }
 
 /* tslint:disable */
@@ -34,23 +34,23 @@ export interface CurrentUser {
 // ====================================================
 
 export interface Login_authentication_login {
-  __typename: "LoginType";
-  id: string | null;
-  username: string | null;
+    __typename: "LoginType";
+    id: string | null;
+    username: string | null;
 }
 
 export interface Login_authentication {
-  __typename: "AuthenticationMutation";
-  login: Login_authentication_login | null;
+    __typename: "AuthenticationMutation";
+    login: Login_authentication_login | null;
 }
 
 export interface Login {
-  authentication: Login_authentication;
+    authentication: Login_authentication;
 }
 
 export interface LoginVariables {
-  username?: string | null;
-  password?: string | null;
+    username?: string | null;
+    password?: string | null;
 }
 
 /* tslint:disable */
@@ -63,12 +63,74 @@ export interface LoginVariables {
 // ====================================================
 
 export interface Logout_authentication {
-  __typename: "AuthenticationMutation";
-  logout: boolean | null;
+    __typename: "AuthenticationMutation";
+    logout: boolean | null;
 }
 
 export interface Logout {
-  authentication: Logout_authentication;
+    authentication: Logout_authentication;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: AddPromocode
+// ====================================================
+
+export interface AddPromocode_promoCodes {
+    __typename: "PromoCodesMutation";
+    add: boolean | null;
+}
+
+export interface AddPromocode {
+    promoCodes: AddPromocode_promoCodes;
+}
+
+export interface AddPromocodeVariables {
+    data: PromoCodeInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: AllPromocodes
+// ====================================================
+
+export interface AllPromocodes_promoCodes_all_data {
+    __typename: "PromoCodeType";
+    id: string | null;
+    name: string | null;
+    sale: string | null;
+    createdAt: string | null;
+    adminId: string | null;
+    used: boolean | null;
+    QRCodeId: string | null;
+}
+
+export interface AllPromocodes_promoCodes_all {
+    __typename: "AllPromoCodeType";
+    data: AllPromocodes_promoCodes_all_data[];
+    count: number;
+}
+
+export interface AllPromocodes_promoCodes {
+    __typename: "PromoCodesQuery";
+    all: AllPromocodes_promoCodes_all | null;
+}
+
+export interface AllPromocodes {
+    promoCodes: AllPromocodes_promoCodes;
+}
+
+export interface AllPromocodesVariables {
+    count?: number | null;
+    offset?: number | null;
 }
 
 /* tslint:disable */
@@ -81,16 +143,16 @@ export interface Logout {
 // ====================================================
 
 export interface AddUser_users {
-  __typename: "UsersMutation";
-  addUser: boolean | null;
+    __typename: "UsersMutation";
+    addUser: boolean | null;
 }
 
 export interface AddUser {
-  users: AddUser_users;
+    users: AddUser_users;
 }
 
 export interface AddUserVariables {
-  data: UserInput;
+    data: UserInput;
 }
 
 /* tslint:disable */
@@ -103,20 +165,20 @@ export interface AddUserVariables {
 // ====================================================
 
 export interface AllUsers_users_allUsers {
-  __typename: "UserType";
-  id: string;
-  firstname: string;
-  username: string;
-  isAdmin: boolean | null;
+    __typename: "UserType";
+    id: string;
+    firstname: string;
+    username: string;
+    isAdmin: boolean | null;
 }
 
 export interface AllUsers_users {
-  __typename: "UsersQuery";
-  allUsers: (AllUsers_users_allUsers | null)[] | null;
+    __typename: "UsersQuery";
+    allUsers: (AllUsers_users_allUsers | null)[] | null;
 }
 
 export interface AllUsers {
-  users: AllUsers_users;
+    users: AllUsers_users;
 }
 
 /* tslint:disable */
@@ -129,16 +191,16 @@ export interface AllUsers {
 // ====================================================
 
 export interface DeleteUser_users {
-  __typename: "UsersMutation";
-  deleteUser: boolean | null;
+    __typename: "UsersMutation";
+    deleteUser: boolean | null;
 }
 
 export interface DeleteUser {
-  users: DeleteUser_users;
+    users: DeleteUser_users;
 }
 
 export interface DeleteUserVariables {
-  id: string;
+    id: string;
 }
 
 /* tslint:disable */
@@ -151,17 +213,17 @@ export interface DeleteUserVariables {
 // ====================================================
 
 export interface UpdateUser_users {
-  __typename: "UsersMutation";
-  updateUser: boolean | null;
+    __typename: "UsersMutation";
+    updateUser: boolean | null;
 }
 
 export interface UpdateUser {
-  users: UpdateUser_users;
+    users: UpdateUser_users;
 }
 
 export interface UpdateUserVariables {
-  id: string;
-  data: UserInput;
+    id: string;
+    data: UserInput;
 }
 
 /* tslint:disable */
@@ -173,11 +235,18 @@ export interface UpdateUserVariables {
 // START Enums and Input Objects
 //==============================================================
 
+export interface PromoCodeInput {
+    name?: string | null;
+    sale?: string | null;
+    adminId?: string | null;
+    QRCode?: string | null;
+}
+
 export interface UserInput {
-  firstname: string;
-  username: string;
-  password: string;
-  isAdmin: boolean;
+    firstname: string;
+    username: string;
+    password?: string | null;
+    isAdmin: boolean;
 }
 
 //==============================================================

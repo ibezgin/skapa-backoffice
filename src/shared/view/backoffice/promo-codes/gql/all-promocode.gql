@@ -1,0 +1,16 @@
+query AllPromocodes($count: Int, $offset: Int) {
+    promoCodes {
+        all(count: $count, offset: $offset) {
+            data {
+                id
+                name
+                sale
+                createdAt
+                adminId
+                used
+                QRCodeId
+            }
+            count
+        }
+    }
+}
