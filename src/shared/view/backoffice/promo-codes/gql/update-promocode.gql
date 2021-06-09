@@ -1,0 +1,5 @@
+mutation UpdatePromocode($id: String, $data: PromoCodeInput!) {
+    promoCodes {
+        update(id: $id, data: $data)
+    }
+}

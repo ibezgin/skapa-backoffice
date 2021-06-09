@@ -10,6 +10,8 @@ type PromoCodesQuery {
 
 type PromoCodesMutation {
     add(data: PromoCodeInput!): Boolean
+    update(id: String, data: PromoCodeInput!): Boolean
+    delete(id: String): Boolean
 }
 
 type AllPromoCodeType {

@@ -1,4 +1,3 @@
-import QRCode from "react-qr-code";
 import { AbstractRequestContextHelper } from "../../abstract-request-context-helper";
 
 export class PromoCodesContextHelper extends AbstractRequestContextHelper {
@@ -10,8 +9,6 @@ export class PromoCodesContextHelper extends AbstractRequestContextHelper {
                 offset,
             },
         });
-
-        console.log(data);
 
         return data;
     }
@@ -42,7 +39,6 @@ export class PromoCodesContextHelper extends AbstractRequestContextHelper {
         adminId: string;
         QRCode: string;
     }) {
-        // console.log(data);
         return await await this.context.helpers.rest.post({
             path: "/promo-code/add",
             data: { ...data, QRCodeId: data.QRCode },

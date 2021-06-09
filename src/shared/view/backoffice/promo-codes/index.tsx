@@ -1,18 +1,31 @@
-import { useQuery } from "@apollo/client";
-import { Table } from "antd";
+import { useMutation, useQuery } from "@apollo/client";
+import { Button, Col, Modal, Row, Space, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
     AllPromocodes,
     AllPromocodesVariables,
+    DeletePromocode,
+    DeletePromocodeVariables,
 } from "gql/types/operation-result-types";
-import React, { useEffect, useMemo, useState } from "react";
+import { useGenerateCode } from "hooks/use-generate-tempory-code";
+import { useMutationOptions } from "hooks/use-mutation-options";
+import moment from "moment";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { errorHandler } from "service/utils/error-handler";
 import ALL_PROMO_CODES from "./gql/all-promocode.gql";
+import DELETE_PROMOCODE from "./gql/delete-promocode.gql";
+import { PromoCodesModal } from "./modal";
+import QrCode from "qrcode.react";
+
+const { confirm } = Modal;
 
 const pageSize = 30;
 
 let cashedData: any;
 
 export const PromoCodes = React.memo(() => {
+    const [deleteId, setDeleteId] = useState<string>("");
+
     const [paginationState, setPagination] = useState<{
         count: number;
         offset: number;
@@ -25,19 +38,27 @@ export const PromoCodes = React.memo(() => {
                 ...paginationState,
             },
             fetchPolicy: "cache-and-network",
+            notifyOnNetworkStatusChange: true,
         },
     );
 
-    // eslint-disable-next-line no-console
-    console.log(allPromocodesQuery.data?.promoCodes.all);
+    const { generateTemporyCode } = useGenerateCode();
+
+    const { execute, loading } = useDeletePromocodeMutation();
 
     const allPromocodes = useMemo(() => {
         return (
-            allPromocodesQuery.data?.promoCodes.all?.data ||
+            allPromocodesQuery.data?.promoCodes.all?.data.map(elem => ({
+                ...elem,
+                key: generateTemporyCode(),
+                createdAt: moment(Number(elem.createdAt) * 1000).format(
+                    "YYYY-MM-DD HH:mm:ss",
+                ),
+            })) ||
             cashedData?.data ||
             []
         );
-    }, [allPromocodesQuery.data?.promoCodes.all]);
+    }, [allPromocodesQuery.data?.promoCodes.all?.data, generateTemporyCode]);
 
     const totalCount = allPromocodesQuery.data?.promoCodes.all?.count;
 
@@ -49,11 +70,46 @@ export const PromoCodes = React.memo(() => {
                 dataIndex: "createdAt",
                 title: "Дата создания (в текущем часовом поясе)",
             },
-            { dataIndex: "qr", title: "Qr" },
+            { dataIndex: "QRCodeId", title: "Qr" },
             { dataIndex: "adminId", title: "Создатель" },
-            { dataIndex: "edit", title: "" },
+            {
+                dataIndex: "edit",
+                title: "",
+                render: (_text, record: any) => (
+                    <Space size="middle">
+                        <PromoCodesModal isEdit data={record}>
+                            {setVisible => {
+                                return (
+                                    <Button
+                                        type="link"
+                                        onClick={() => setVisible(true)}
+                                    >
+                                        Изменить
+                                    </Button>
+                                );
+                            }}
+                        </PromoCodesModal>
+                        <Button
+                            type="link"
+                            onClick={() => {
+                                confirm({
+                                    title: `Подтвердите удаление промокода [${record.name}]`,
+                                    onOk: () => {
+                                        setDeleteId(record.id);
+                                        execute(record.id);
+                                    },
+                                });
+                            }}
+                            loading={loading && deleteId === record.id}
+                            disabled={loading}
+                        >
+                            Удалить
+                        </Button>
+                    </Space>
+                ),
+            },
         ],
-        [],
+        [deleteId, execute, loading],
     );
     useEffect(() => {
         cashedData = undefined;
@@ -63,21 +119,35 @@ export const PromoCodes = React.memo(() => {
         cashedData = Object.assign({}, allPromocodesQuery.data?.promoCodes.all);
     }
 
-    // eslint-disable-next-line no-console
-    console.log(cashedData);
+    const pagination = useMemo(
+        () => ({
+            pageSize,
+            defaultPageSize: pageSize,
+            total: totalCount || cashedData?.count,
+            current: paginationState.offset / pageSize + 1,
+            onChange: (page: number, _pageSize?: number) => {
+                setPagination(_pagination => ({
+                    ..._pagination,
+                    offset: (page - 1) * (_pageSize || 0),
+                }));
+            },
+        }),
+        [paginationState.offset, totalCount],
+    );
 
-    const pagination = {
-        pageSize,
-        defaultPageSize: pageSize,
-        total: totalCount || cashedData?.count,
-        current: paginationState.offset / pageSize + 1,
-        onChange: (page: number, _pageSize?: number) => {
-            setPagination(_pagination => ({
-                ..._pagination,
-                offset: (page - 1) * (_pageSize || 0),
-            }));
-        },
-    };
+    const downloadButton = useCallback((id: string, name: string) => {
+        // Generate download with use canvas and stream
+        const canvas: any = document.getElementById(id);
+        const pngUrl = canvas
+            ?.toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = `${name}.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }, []);
     return (
         <>
             <Table
@@ -85,7 +155,65 @@ export const PromoCodes = React.memo(() => {
                 dataSource={allPromocodes}
                 loading={allPromocodesQuery.loading}
                 pagination={pagination}
+                expandable={{
+                    expandedRowRender: (record: any) => (
+                        <>
+                            <Row gutter={[16, 0]}>
+                                <Col>
+                                    <QrCode
+                                        value={record.QRCodeId}
+                                        renderAs="canvas"
+                                        id={record.key}
+                                        size={290}
+                                        level="H"
+                                    />
+                                </Col>
+                                <Col>
+                                    <Button
+                                        onClick={() =>
+                                            downloadButton(
+                                                record.key,
+                                                record.name,
+                                            )
+                                        }
+                                        type="primary"
+                                    >
+                                        Скачать
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </>
+                    ),
+                    rowExpandable: (record: any) =>
+                        record.name !== "Not Expandable",
+                }}
             />
         </>
     );
 });
+
+function useDeletePromocodeMutation() {
+    const options = useMutationOptions();
+
+    const [mutation, { loading }] = useMutation<
+        DeletePromocode,
+        DeletePromocodeVariables
+    >(DELETE_PROMOCODE, {
+        ...options,
+        onError: error => {
+            errorHandler(error);
+        },
+    });
+
+    return {
+        execute: async (id: string) => {
+            mutation({
+                variables: {
+                    id,
+                },
+                refetchQueries: ["AllPromocodes"],
+            });
+        },
+        loading,
+    };
+}

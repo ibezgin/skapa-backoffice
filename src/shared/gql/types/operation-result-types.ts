@@ -139,6 +139,51 @@ export interface AllPromocodesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeletePromocode
+// ====================================================
+
+export interface DeletePromocode_promoCodes {
+    __typename: "PromoCodesMutation";
+    delete: boolean | null;
+}
+
+export interface DeletePromocode {
+    promoCodes: DeletePromocode_promoCodes;
+}
+
+export interface DeletePromocodeVariables {
+    id: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UpdatePromocode
+// ====================================================
+
+export interface UpdatePromocode_promoCodes {
+    __typename: "PromoCodesMutation";
+    update: boolean | null;
+}
+
+export interface UpdatePromocode {
+    promoCodes: UpdatePromocode_promoCodes;
+}
+
+export interface UpdatePromocodeVariables {
+    id?: string | null;
+    data: PromoCodeInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: AddUser
 // ====================================================
 

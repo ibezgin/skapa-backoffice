@@ -111,7 +111,7 @@ export class RestContextHelper extends AbstractRequestContextHelper {
         }
 
         if (data.state === "error") {
-            throw new Error(data.error);
+            throw new Error(data.error.writeErrors[0].errmsg);
         }
     }
 

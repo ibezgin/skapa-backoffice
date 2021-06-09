@@ -1,6 +1,6 @@
 import { Button, Modal, Typography } from "antd";
 import { Formik } from "formik";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import * as FormikAntd from "formik-antd";
 import QrCode from "qrcode.react";
 import { useGenerateCode } from "hooks/use-generate-tempory-code";
@@ -8,9 +8,13 @@ import { ApolloError, useMutation } from "@apollo/client";
 import {
     AddPromocode,
     AddPromocodeVariables,
+    AllPromocodes_promoCodes_all_data,
     PromoCodeInput,
+    UpdatePromocode,
+    UpdatePromocodeVariables,
 } from "gql/types/operation-result-types";
 import ADD_PROMOCODE from "../gql/add-promocode.gql";
+import UPDATE_PROMOCODE from "../gql/update-promocode.gql";
 import { useMutationOptions } from "hooks/use-mutation-options";
 import { errorHandler } from "service/utils/error-handler";
 import { useUser } from "hooks/use-user";
@@ -19,6 +23,7 @@ const { Title } = Typography;
 
 interface IProps {
     isEdit: boolean;
+    data?: AllPromocodes_promoCodes_all_data;
     children: (setVisible: (state: boolean) => void) => ReactNode;
 }
 
@@ -27,25 +32,67 @@ export const PromoCodesModal = React.memo((props: IProps) => {
 
     const { generateTemporyCode, generatePromoCode } = useGenerateCode();
 
-    const { execute: addPromocode, loading } = useAddPromocodeMutation();
+    const {
+        execute: addPromocode,
+        loading: addPromocodeLoading,
+    } = useAddPromocodeMutation();
+
+    const {
+        execute: updatePromocode,
+        loading: updatePromocodeLoading,
+    } = useUpdatePromocodeMutation();
+
+    const loading = addPromocodeLoading || updatePromocodeLoading;
 
     const user = useUser();
 
+    const initialValues = useMemo(
+        () =>
+            !props.isEdit
+                ? { name: "", sale: "", qr: "" }
+                : {
+                      name: props.data?.name,
+                      sale: props.data?.sale,
+                      qr: props.data?.QRCodeId,
+                  },
+        [
+            props.data?.QRCodeId,
+            props.data?.name,
+            props.data?.sale,
+            props.isEdit,
+        ],
+    );
+
     return (
         <Formik
-            initialValues={{ name: "", sale: "", qr: "" }}
+            initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values, { resetForm }) => {
-                const addResult = await addPromocode({
-                    name: values.name,
-                    sale: String(values.sale),
-                    QRCode: values.qr,
-                    adminId: user.username,
-                });
-
-                if (addResult) {
-                    resetForm();
-                    setVisible(false);
+                if (!props.isEdit) {
+                    const addResult = await addPromocode({
+                        name: values.name,
+                        sale: String(values.sale),
+                        QRCode: values.qr,
+                        adminId: user.username,
+                    });
+                    if (addResult) {
+                        resetForm();
+                        setVisible(false);
+                    }
+                } else {
+                    const updateResult = await updatePromocode(
+                        String(props.data?.id),
+                        {
+                            name: values.name,
+                            sale: String(values.sale),
+                            QRCode: values.qr,
+                            adminId: user.username,
+                        },
+                    );
+                    if (updateResult) {
+                        resetForm();
+                        setVisible(false);
+                    }
                 }
 
                 resetForm();
@@ -77,18 +124,20 @@ export const PromoCodesModal = React.memo((props: IProps) => {
                                         autoCorrect="off"
                                     />
                                 </FormikAntd.FormItem>
-                                <Button
-                                    style={{
-                                        width: "100%",
-                                        marginBottom: "16px",
-                                    }}
-                                    onClick={() => {
-                                        const code = generatePromoCode();
-                                        setFieldValue("name", code);
-                                    }}
-                                >
-                                    Сгенерировать промо-код
-                                </Button>
+                                {!props.isEdit && (
+                                    <Button
+                                        style={{
+                                            width: "100%",
+                                            marginBottom: "16px",
+                                        }}
+                                        onClick={() => {
+                                            const code = generatePromoCode();
+                                            setFieldValue("name", code);
+                                        }}
+                                    >
+                                        Сгенерировать промо-код
+                                    </Button>
+                                )}
                                 <FormikAntd.FormItem
                                     name="sale"
                                     label="Скидка (%)"
@@ -117,7 +166,10 @@ export const PromoCodesModal = React.memo((props: IProps) => {
                                 </FormikAntd.FormItem>
                                 {values.qr && (
                                     <div style={{ textAlign: "center" }}>
-                                        <QrCode value={values.qr || ""} />
+                                        <QrCode
+                                            value={values.qr || ""}
+                                            level="H"
+                                        />
                                     </div>
                                 )}
                                 <Button
@@ -172,6 +224,35 @@ function useAddPromocodeMutation() {
             });
 
             return result.data?.promoCodes.add;
+        },
+        loading,
+    };
+}
+
+function useUpdatePromocodeMutation() {
+    const options = useMutationOptions();
+
+    const [mutation, { loading }] = useMutation<
+        UpdatePromocode,
+        UpdatePromocodeVariables
+    >(UPDATE_PROMOCODE, {
+        ...options,
+        onError: (error: ApolloError) => {
+            errorHandler(error);
+        },
+        refetchQueries: ["AllPromocodes"],
+    });
+
+    return {
+        execute: async (id: string, data: PromoCodeInput) => {
+            const result = await mutation({
+                variables: {
+                    id,
+                    data,
+                },
+            });
+
+            return result.data?.promoCodes.update;
         },
         loading,
     };
