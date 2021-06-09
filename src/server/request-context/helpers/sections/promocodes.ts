@@ -30,7 +30,7 @@ export class PromoCodesContextHelper extends AbstractRequestContextHelper {
     ) {
         return await await this.context.helpers.rest.patch({
             path: `/promo-code/update/${id}`,
-            data,
+            data: { ...data, QRCodeId: data.QRCode },
         });
     }
     public async add(data: {

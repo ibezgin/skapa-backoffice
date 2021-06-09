@@ -184,8 +184,7 @@ export const PromoCodes = React.memo(() => {
                             </Row>
                         </>
                     ),
-                    rowExpandable: (record: any) =>
-                        record.name !== "Not Expandable",
+                    rowExpandable: (record: any) => Boolean(record.QRCodeId),
                 }}
             />
         </>
