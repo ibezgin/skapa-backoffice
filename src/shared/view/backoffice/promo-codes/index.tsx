@@ -5,10 +5,12 @@ import {
     AllPromocodes,
     AllPromocodesVariables,
 } from "gql/types/operation-result-types";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ALL_PROMO_CODES from "./gql/all-promocode.gql";
 
 const pageSize = 30;
+
+let cashedData: any;
 
 export const PromoCodes = React.memo(() => {
     const [paginationState, setPagination] = useState<{
@@ -29,10 +31,13 @@ export const PromoCodes = React.memo(() => {
     // eslint-disable-next-line no-console
     console.log(allPromocodesQuery.data?.promoCodes.all);
 
-    const allPromocodes = useMemo(
-        () => allPromocodesQuery.data?.promoCodes.all?.data || [],
-        [allPromocodesQuery.data?.promoCodes.all],
-    );
+    const allPromocodes = useMemo(() => {
+        return (
+            allPromocodesQuery.data?.promoCodes.all?.data ||
+            cashedData?.data ||
+            []
+        );
+    }, [allPromocodesQuery.data?.promoCodes.all]);
 
     const totalCount = allPromocodesQuery.data?.promoCodes.all?.count;
 
@@ -50,11 +55,21 @@ export const PromoCodes = React.memo(() => {
         ],
         [],
     );
+    useEffect(() => {
+        cashedData = undefined;
+    }, []);
+
+    if (allPromocodesQuery?.data) {
+        cashedData = Object.assign({}, allPromocodesQuery.data?.promoCodes.all);
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(cashedData);
 
     const pagination = {
         pageSize,
         defaultPageSize: pageSize,
-        total: totalCount,
+        total: totalCount || cashedData?.count,
         current: paginationState.offset / pageSize + 1,
         onChange: (page: number, _pageSize?: number) => {
             setPagination(_pagination => ({
