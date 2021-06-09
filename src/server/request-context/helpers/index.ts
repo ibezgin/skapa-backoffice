@@ -24,13 +24,6 @@ export class RequestContextHelpers extends AbstractRequestContextHelper {
         );
     }
 
-    public get authentication() {
-        return (
-            this.cache.database ||
-            (this.cache.database = new DatabaseContextHelper(this.context))
-        );
-    }
-
     public get rest() {
         return (
             this.cache.rest ||

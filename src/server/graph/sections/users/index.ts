@@ -3,10 +3,22 @@ import schema from "./schema.graphql";
 
 export const usersSubSchema = new SubSchema(schema, {
     Query: {
-        users: () => ({}),
+        users: (_obj, _params, { authentification }) => {
+            if (authentification.isAuthenticated()) {
+                return {};
+            } else {
+                throw new Error("permission denied");
+            }
+        },
     },
     Mutation: {
-        users: () => ({}),
+        users: (_obj, _params, { authentification }) => {
+            if (authentification.isAuthenticated()) {
+                return {};
+            } else {
+                throw new Error("permission denied");
+            }
+        },
     },
     UsersQuery: {
         allUsers: async (_obj, _props, { helpers }) =>

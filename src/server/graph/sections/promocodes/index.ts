@@ -3,10 +3,22 @@ import schema from "./schema.graphql";
 
 export const promoCodesSubSchema = new SubSchema(schema, {
     Query: {
-        promoCodes: () => ({}),
+        promoCodes: (_obj, _params, { authentification }) => {
+            if (authentification.isAuthenticated()) {
+                return {};
+            } else {
+                throw new Error("permission denied");
+            }
+        },
     },
     Mutation: {
-        promoCodes: () => ({}),
+        promoCodes: (_obj, _params, { authentification }) => {
+            if (authentification.isAuthenticated()) {
+                return {};
+            } else {
+                throw new Error("permission denied");
+            }
+        },
     },
     PromoCodesQuery: {
         all: async (_obj, { count, offset }, { helpers }) =>
