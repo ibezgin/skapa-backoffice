@@ -12,6 +12,7 @@ type PromoCodesMutation {
     add(data: PromoCodeInput!): Boolean
     update(id: String, data: PromoCodeInput!): Boolean
     delete(id: String): Boolean
+    addMany(data: [PromoCodeInput!]!): Boolean
 }
 
 type AllPromoCodeType {
@@ -33,5 +34,5 @@ input PromoCodeInput {
     name: String
     sale: String
     adminId: String
-    QRCode: String
+    QRCodeId: String
 }

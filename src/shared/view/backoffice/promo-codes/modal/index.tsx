@@ -72,7 +72,7 @@ export const PromoCodesModal = React.memo((props: IProps) => {
                     const addResult = await addPromocode({
                         name: values.name,
                         sale: String(values.sale),
-                        QRCode: values.qr,
+                        QRCodeId: values.qr,
                         adminId: user.username,
                     });
                     if (addResult) {
@@ -85,7 +85,7 @@ export const PromoCodesModal = React.memo((props: IProps) => {
                         {
                             name: values.name,
                             sale: String(values.sale),
-                            QRCode: values.qr,
+                            QRCodeId: values.qr,
                             adminId: user.username,
                         },
                     );

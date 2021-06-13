@@ -30,7 +30,7 @@ export class PromoCodesContextHelper extends AbstractRequestContextHelper {
     ) {
         return await await this.context.helpers.rest.patch({
             path: `/promo-code/update/${id}`,
-            data: { ...data, QRCodeId: data.QRCode },
+            data,
         });
     }
     public async add(data: {
@@ -41,7 +41,20 @@ export class PromoCodesContextHelper extends AbstractRequestContextHelper {
     }) {
         return await await this.context.helpers.rest.post({
             path: "/promo-code/add",
-            data: { ...data, QRCodeId: data.QRCode },
+            data,
+        });
+    }
+    public async addMany(
+        data: Array<{
+            name: string;
+            sale: string;
+            adminId: string;
+            QRCodeId: string;
+        }>,
+    ) {
+        return await await this.context.helpers.rest.post({
+            path: "/promo-code/add-many",
+            data: { promoCodes: data },
         });
     }
 }

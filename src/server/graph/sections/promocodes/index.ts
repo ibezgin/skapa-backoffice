@@ -31,5 +31,7 @@ export const promoCodesSubSchema = new SubSchema(schema, {
             await helpers.sections.promocodes.delete(id),
         update: async (_obj, { id, data }, { helpers }) =>
             await helpers.sections.promocodes.update(id, data),
+        addMany: async (_obj, { data }, { helpers }) =>
+            await helpers.sections.promocodes.addMany(data),
     },
 });

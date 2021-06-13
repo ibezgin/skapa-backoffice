@@ -77,6 +77,28 @@ export interface Logout {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddManyPromocodes
+// ====================================================
+
+export interface AddManyPromocodes_promoCodes {
+    __typename: "PromoCodesMutation";
+    addMany: boolean | null;
+}
+
+export interface AddManyPromocodes {
+    promoCodes: AddManyPromocodes_promoCodes;
+}
+
+export interface AddManyPromocodesVariables {
+    data: PromoCodeInput[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: AddPromocode
 // ====================================================
 
@@ -284,7 +306,7 @@ export interface PromoCodeInput {
     name?: string | null;
     sale?: string | null;
     adminId?: string | null;
-    QRCode?: string | null;
+    QRCodeId?: string | null;
 }
 
 export interface UserInput {
