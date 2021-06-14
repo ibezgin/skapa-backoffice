@@ -196,7 +196,9 @@ export const PromoCodes = React.memo(() => {
                                                 height: "50px",
                                                 position: "absolute",
                                                 top: "41%",
-                                                left: "41%",
+                                                // left: "41%",
+                                                left: "50%",
+                                                transform: "translateX(-50%)",
                                             }}
                                         />
                                     </div>
