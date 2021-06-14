@@ -2,7 +2,6 @@ import { Button, Modal, Typography } from "antd";
 import { Formik } from "formik";
 import React, { ReactNode, useMemo, useState } from "react";
 import * as FormikAntd from "formik-antd";
-import QrCode from "qrcode.react";
 import { useGenerateCode } from "hooks/use-generate-tempory-code";
 import { ApolloError, useMutation } from "@apollo/client";
 import {
@@ -18,6 +17,7 @@ import UPDATE_PROMOCODE from "../gql/update-promocode.gql";
 import { useMutationOptions } from "hooks/use-mutation-options";
 import { errorHandler } from "service/utils/error-handler";
 import { useUser } from "hooks/use-user";
+import { QrCode } from "components/qr-code";
 
 const { Title } = Typography;
 
@@ -166,10 +166,7 @@ export const PromoCodesModal = React.memo((props: IProps) => {
                                 </FormikAntd.FormItem>
                                 {values.qr && (
                                     <div style={{ textAlign: "center" }}>
-                                        <QrCode
-                                            value={values.qr || ""}
-                                            level="H"
-                                        />
+                                        <QrCode value={values.qr || ""} />
                                     </div>
                                 )}
                                 <Button

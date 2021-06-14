@@ -9,10 +9,10 @@ import {
 } from "gql/types/operation-result-types";
 import { useGenerateCode } from "hooks/use-generate-tempory-code";
 import { useUser } from "hooks/use-user";
-import QrCode from "qrcode.react";
 import { useMutation } from "@apollo/client";
 import ADD_MANY_PROMOCODES from "../gql/add-many-promocodes.gql";
 import { useMutationOptions } from "hooks/use-mutation-options";
+import { QrCode } from "components/qr-code";
 
 const { Title } = Typography;
 
@@ -152,7 +152,6 @@ export const PromoCodesAddManyModal = React.memo((props: IProps) => {
                                                                         _elem.QRCodeId ||
                                                                         ""
                                                                     }
-                                                                    level="H"
                                                                 />
                                                             </div>
                                                         )}

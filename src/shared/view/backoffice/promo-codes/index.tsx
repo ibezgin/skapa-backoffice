@@ -16,6 +16,8 @@ import ALL_PROMO_CODES from "./gql/all-promocode.gql";
 import DELETE_PROMOCODE from "./gql/delete-promocode.gql";
 import { PromoCodesModal } from "./modal";
 import QrCode from "qrcode.react";
+import logo from "../../../assets/logo.jpg";
+import html2canvas from "html2canvas";
 
 const { confirm } = Modal;
 
@@ -137,16 +139,26 @@ export const PromoCodes = React.memo(() => {
 
     const downloadButton = useCallback((id: string, name: string) => {
         // Generate download with use canvas and stream
-        const canvas: any = document.getElementById(id);
-        const pngUrl = canvas
-            ?.toDataURL("image/png")
-            .replace("image/png", "image/octet-stream");
-        const downloadLink = document.createElement("a");
-        downloadLink.href = pngUrl;
-        downloadLink.download = `${name}.png`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+        const _canvas: any = document.getElementById(id);
+        html2canvas(_canvas, { allowTaint: true, useCORS: true }).then(
+            canvas => {
+                document.body.appendChild(canvas);
+                // const img = new Image();
+                // img.crossOrigin = "anonymous";
+                // img.src = canvas.baseURI;
+
+                const pngUrl = canvas
+                    ?.toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream");
+
+                const downloadLink = document.createElement("a");
+                downloadLink.href = pngUrl;
+                downloadLink.download = `${name}.png`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            },
+        );
     }, []);
     return (
         <>
@@ -160,19 +172,40 @@ export const PromoCodes = React.memo(() => {
                         <>
                             <Row gutter={[16, 0]}>
                                 <Col>
-                                    <QrCode
-                                        value={record.QRCodeId}
-                                        renderAs="canvas"
-                                        id={record.key}
-                                        size={290}
-                                        level="H"
-                                    />
+                                    <div
+                                        id={record.name}
+                                        style={{ position: "relative" }}
+                                    >
+                                        <QrCode
+                                            value={record.QRCodeId}
+                                            renderAs="svg"
+                                            // id={record.key}
+                                            size={290}
+                                            level="H"
+                                            imageSettings={{
+                                                src: logo,
+                                                width: 50,
+                                                height: 50,
+                                                excavate: true,
+                                            }}
+                                        />
+                                        <img
+                                            src={logo}
+                                            style={{
+                                                width: "50px",
+                                                height: "50px",
+                                                position: "absolute",
+                                                top: "41%",
+                                                left: "41%",
+                                            }}
+                                        />
+                                    </div>
                                 </Col>
                                 <Col>
                                     <Button
                                         onClick={() =>
                                             downloadButton(
-                                                record.key,
+                                                record.name,
                                                 record.name,
                                             )
                                         }
