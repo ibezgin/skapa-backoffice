@@ -25,7 +25,7 @@ export class RestContextHelper extends AbstractRequestContextHelper {
             url: process.env.API_PATH
                 ? `${process.env.API_PATH}${params.path}`
                 : "localhost:3000/api/backoffice-api",
-            headers: this.getHeaders(),
+            headers: await this.getHeaders(),
             params: params.params,
         };
 
@@ -44,7 +44,7 @@ export class RestContextHelper extends AbstractRequestContextHelper {
             url: process.env.API_PATH
                 ? `${process.env.API_PATH}${params.path}`
                 : "localhost:3000/api/backoffice-api",
-            headers: this.getHeaders(),
+            headers: await this.getHeaders(),
             params: params.params,
             data: params.data,
         };
@@ -64,7 +64,7 @@ export class RestContextHelper extends AbstractRequestContextHelper {
             url: process.env.API_PATH
                 ? `${process.env.API_PATH}${params.path}`
                 : "localhost:3000/api/backoffice-api",
-            headers: this.getHeaders(),
+            headers: await this.getHeaders(),
             params: params.params,
             data: params.data,
         };
@@ -83,7 +83,7 @@ export class RestContextHelper extends AbstractRequestContextHelper {
             url: process.env.API_PATH
                 ? `${process.env.API_PATH}${params.path}`
                 : "localhost:3000/api/backoffice-api",
-            headers: this.getHeaders(),
+            headers: await this.getHeaders(),
             params: params.params,
             data: params.data,
         };
@@ -115,10 +115,34 @@ export class RestContextHelper extends AbstractRequestContextHelper {
         }
     }
 
-    private getHeaders() {
+    private async getHeaders() {
         return {
             "Content-Type": "application/json",
-            "skapa-api-key": process.env.API_KEY,
+            "skapa-api-key": await this.getToken(),
         };
+    }
+
+    private async getToken() {
+        const requestParams: AxiosRequestConfig = {
+            method: "POST",
+            url: process.env.IDENTITY_API_PATH
+                ? process.env.IDENTITY_API_PATH
+                : "localhost:3000/api/identity-api/token/get-connection-token",
+            data: {
+                client_id: "backoffice",
+                secret: "WxW0NZBes2BO0RizsjUgj2snooPj3G8KDJm5gTD04gy1wsw",
+            },
+        };
+
+        console.log(requestParams);
+
+        console.log();
+        const response: AxiosResponse<IResponse<string>> = await this.send(
+            requestParams,
+        );
+
+        // eslint-disable-next-line no-console
+        console.log(response.data);
+        return response?.data?.value;
     }
 }

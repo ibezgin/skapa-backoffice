@@ -6,6 +6,7 @@ declare namespace NodeJS {
         CONNECTION_STRING: "string";
         API_KEY: string;
         API_PATH: string;
+        IDENTITY_API_PATH: string;
     }
 }
 

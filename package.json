@@ -28,8 +28,9 @@
         "test:update": "yarn-or-npm test --updateSnapshot",
         "transpile": "yarn-or-npm babel -d build/transpiled ./src --extensions .es6,.js,.es,.jsx,.mjs,.ts,.tsx --ignore **/*.d.ts",
         "tsc": "tsc --noEmit",
-        "dev": "cross-env NODE_ENV=development TS_NODE_PROJECT=tsconfig.tooling.json ts-node scripts/start",
         "stop": "taskkill /f /im node.exe",
+        "dev": "cross-env NODE_ENV=development TS_NODE_PROJECT=tsconfig.tooling.json ts-node scripts/start",
+        "stop:macos": "killall -9 node",
         "clean": "rimraf ./build/",
         "build:gql": "apollo client:codegen --endpoint=http://localhost:8080/graphql --target=typescript --outputFlat --addTypename --includes='./src/shared/**/*.gql' --excludes='**/*.rest.gql' ./src/shared/gql/types/operation-result-types.ts"
     },
