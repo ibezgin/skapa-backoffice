@@ -142,11 +142,6 @@ export const PromoCodes = React.memo(() => {
         const _canvas: any = document.getElementById(id);
         html2canvas(_canvas, { allowTaint: true, useCORS: true }).then(
             canvas => {
-                document.body.appendChild(canvas);
-                // const img = new Image();
-                // img.crossOrigin = "anonymous";
-                // img.src = canvas.baseURI;
-
                 const pngUrl = canvas
                     ?.toDataURL("image/png")
                     .replace("image/png", "image/octet-stream");
