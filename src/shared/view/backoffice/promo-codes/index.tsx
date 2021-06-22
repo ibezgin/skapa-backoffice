@@ -157,6 +157,7 @@ export const PromoCodes = React.memo(() => {
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
+                canvas.remove();
             },
         );
     }, []);
