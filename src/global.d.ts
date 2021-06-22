@@ -4,6 +4,9 @@ declare namespace NodeJS {
         PUBLIC_URL: string;
         SOURCE_LANGUAGE: "string";
         CONNECTION_STRING: "string";
+        API_KEY: string;
+        API_PATH: string;
+        IDENTITY_API_PATH: string;
     }
 }
 

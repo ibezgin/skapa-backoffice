@@ -334,37 +334,6 @@ const globalStylesCss = css`
             }
         }
     }
-    #main-sider {
-        .ant-menu {
-            border: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            justify-content: center;
-            margin-top: -54px;
-        }
-        .ant-menu-item {
-            padding: 6px 8px;
-            height: 52px;
-            line-height: 40px;
-            color: #617279;
-        }
-
-        .ant-menu-item:active {
-            background: none;
-        }
-        .ant-menu-inline-collapsed {
-            width: 100%;
-        }
-        .ant-menu-inline .ant-menu-selected::after,
-        .ant-menu-inline .ant-menu-item-selected::after {
-            display: none;
-        }
-        .ant-menu-item .anticon,
-        .ant-menu-submenu-title .anticon {
-            vertical-align: top;
-        }
-    }
     .ant-tooltip.ant-tooltip {
         z-index: 10;
     }
@@ -391,6 +360,7 @@ const globalStylesCss = css`
         text-align: center;
         margin: 10px;
         border-bottom: 5px solid black;
+        color: #fff;
     }
 
     .logo svg {

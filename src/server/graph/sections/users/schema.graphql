@@ -1,0 +1,28 @@
+extend type Query {
+    users: UsersQuery!
+}
+extend type Mutation {
+    users: UsersMutation!
+}
+type UsersQuery {
+    allUsers: [UserType]
+}
+type UsersMutation {
+    addUser(data: UserInput!): Boolean
+    deleteUser(id: String!): Boolean
+    updateUser(id: String!, data: UserInput!): Boolean
+}
+
+type UserType {
+    id: String!
+    firstname: String!
+    username: String!
+    isAdmin: Boolean
+}
+
+input UserInput {
+    firstname: String!
+    username: String!
+    password: String
+    isAdmin: Boolean!
+}

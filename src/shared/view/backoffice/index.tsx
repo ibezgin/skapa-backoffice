@@ -3,9 +3,7 @@ import { ReactNode, useState } from "react";
 import { BackofficeMenu } from "./menu";
 import React from "react";
 import { HeaderWrapper } from "../../components/header";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { SC } from "./styled";
-import logo from "../../assets/logo.png";
 
 const { Sider, Content } = Layout;
 
@@ -14,23 +12,20 @@ interface IProps {
 }
 
 export const AppTemplate = React.memo((props: IProps) => {
-    const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [collapsed, setCollapsed] = useState<boolean>(true);
 
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={() => setCollapsed(value => !value)}
+            >
                 <div className="logo">
-                    <img src={logo} width={60} />
+                    {!collapsed ? "SKAPA.PROMOCODE" : "SKAPA"}
                 </div>
                 <BackofficeMenu />
             </Sider>
-            {React.createElement(
-                collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-                {
-                    className: "trigger",
-                    onClick: () => setCollapsed(!collapsed),
-                },
-            )}
             <Layout className="site-layout">
                 <HeaderWrapper />
                 <Content

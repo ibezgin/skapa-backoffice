@@ -1,5 +1,0 @@
-mutation DeleteCarPart($id: String!) {
-    carPart {
-        deleteCarPart(id: $id)
-    }
-}

@@ -1,5 +1,0 @@
-mutation UpdateBrand($id: String!, $title: String!) {
-    brand {
-        updateBrand(id: $id, title: $title)
-    }
-}

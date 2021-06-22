@@ -1,6 +1,7 @@
 import { AbstractRequestContextHelper } from "../../abstract-request-context-helper";
 import { IUsers, UsersModel } from "../../../db/entities/users";
 import bcrypt from "bcryptjs";
+import { UserInput } from "gql/types/operation-result-types";
 export class UsersContextHelper extends AbstractRequestContextHelper {
     public async allUsers() {
         const result = await this.context.helpers.database.getAll<IUsers>(
@@ -33,7 +34,7 @@ export class UsersContextHelper extends AbstractRequestContextHelper {
         );
     }
 
-    public async updateUser(id: string, data: any) {
+    public async updateUser(id: string, data: UserInput) {
         const user: any = await this.context.helpers.database.getById<IUsers>(
             UsersModel,
             id,
@@ -42,7 +43,7 @@ export class UsersContextHelper extends AbstractRequestContextHelper {
             UsersModel,
             id,
             {
-                ...user,
+                // ...user,
                 ...data,
                 password: data.password
                     ? await bcrypt.hash(data.password, 10)

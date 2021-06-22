@@ -1,5 +1,0 @@
-mutation UpdateProposal($id: String!, $data: ProposalInput) {
-    proposal {
-        updateProposal(id: $id, data: $data)
-    }
-}

@@ -1,5 +1,0 @@
-mutation AddCar($data: CarInput!) {
-    cars {
-        addCar(data: $data)
-    }
-}

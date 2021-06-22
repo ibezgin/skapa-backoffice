@@ -37,7 +37,7 @@ export class DatabaseContextHelper extends AbstractRequestContextHelper {
     }
 
     public async delete<T extends Document>(model: Model<T>, id: string) {
-        const result = await model.deleteOne(id);
+        const result = await model.findByIdAndDelete(id);
         return _.isEmpty(result);
     }
 

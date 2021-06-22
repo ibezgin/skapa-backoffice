@@ -1,0 +1,38 @@
+extend type Query {
+    promoCodes: PromoCodesQuery!
+}
+extend type Mutation {
+    promoCodes: PromoCodesMutation!
+}
+type PromoCodesQuery {
+    all(count: Int, offset: Int): AllPromoCodeType
+}
+
+type PromoCodesMutation {
+    add(data: PromoCodeInput!): Boolean
+    update(id: String, data: PromoCodeInput!): Boolean
+    delete(id: String): Boolean
+    addMany(data: [PromoCodeInput!]!): Boolean
+}
+
+type AllPromoCodeType {
+    data: [PromoCodeType!]!
+    count: Float!
+}
+
+type PromoCodeType {
+    id: String
+    name: String
+    sale: String
+    createdAt: String
+    adminId: String
+    used: Boolean
+    QRCodeId: String
+}
+
+input PromoCodeInput {
+    name: String
+    sale: String
+    adminId: String
+    QRCodeId: String
+}
