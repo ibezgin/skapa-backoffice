@@ -68,7 +68,7 @@ const mongoose = connectDatabase();
 // ===== Passport ====
 const passport = passportAuth();
 
-const SESSION_SECRECT = "qwerty_auto_service_qwerty";
+const SESSION_SECRECT = "qwerty_skapa_promocode_skapa_qwerty";
 // app.use(
 //     cookieSession({
 //         name: "session",

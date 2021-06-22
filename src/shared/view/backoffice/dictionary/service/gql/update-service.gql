@@ -1,5 +1,0 @@
-mutation UpdateService($id: String!, $title: String!, $price: Float!) {
-    service {
-        updateService(id: $id, title: $title, price: $price)
-    }
-}

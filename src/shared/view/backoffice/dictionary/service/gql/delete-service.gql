@@ -1,5 +1,0 @@
-mutation DeleteService($id: String!) {
-    service {
-        deleteService(id: $id)
-    }
-}

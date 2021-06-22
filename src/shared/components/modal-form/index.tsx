@@ -17,7 +17,8 @@ type FormFieldType =
     | "phoneField"
     | "passwordField"
     | "gosNumberField"
-    | "treeField";
+    | "treeField"
+    | "switchField";
 
 type IField = {
     [key in FormFieldType]: any;
@@ -151,6 +152,7 @@ export const ModalForm = React.memo((props: IProps) => {
                         autoComplete="off"
                         autoCapitalize="off"
                         autoCorrect="off"
+                        allowClear
                     />
                 </FormikAntd.FormItem>
             ),
@@ -189,6 +191,11 @@ export const ModalForm = React.memo((props: IProps) => {
                     name={field.name}
                     treeData={field.treeData || []}
                 />
+            ),
+            switchField: (
+                <FormikAntd.FormItem name={field.name} label={field.title}>
+                    <FormikAntd.Switch name={field.name} />
+                </FormikAntd.FormItem>
             ),
         };
 

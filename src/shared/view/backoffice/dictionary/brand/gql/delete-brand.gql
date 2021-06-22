@@ -1,5 +1,0 @@
-mutation DeleteBrand($id: String!) {
-    brand {
-        deleteBrand(id: $id)
-    }
-}

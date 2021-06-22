@@ -1,0 +1,10 @@
+query AllUsers {
+    users {
+        allUsers {
+            id
+            firstname
+            username
+            isAdmin
+        }
+    }
+}

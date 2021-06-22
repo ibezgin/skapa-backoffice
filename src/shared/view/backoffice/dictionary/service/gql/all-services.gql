@@ -1,9 +1,0 @@
-query AllServices {
-    service {
-        allServices {
-            id
-            title
-            price
-        }
-    }
-}

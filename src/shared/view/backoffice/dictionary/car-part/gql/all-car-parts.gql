@@ -1,9 +1,0 @@
-query AllCarParts {
-    carPart {
-        allCarParts {
-            id
-            title
-            price
-        }
-    }
-}

@@ -1,9 +1,0 @@
-#import "../../../../../gql/fragments/proposal-type.gql"
-
-query AllProposals {
-    proposal {
-        allProposals {
-            ...proposalType
-        }
-    }
-}

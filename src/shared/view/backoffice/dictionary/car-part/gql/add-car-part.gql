@@ -1,5 +1,0 @@
-mutation AddCarPart($title: String!, $price: Float!) {
-    carPart {
-        addCarPart(title: $title, price: $price)
-    }
-}

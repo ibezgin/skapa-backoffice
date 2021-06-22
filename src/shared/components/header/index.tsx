@@ -9,11 +9,9 @@ const { Header } = Layout;
 export const HeaderWrapper = React.memo(() => {
     const routes = useRoutes();
     const headerRoutes: any = [];
-    for (const category of routes) {
-        for (const menuItem of category.children) {
-            if (menuItem.header) {
-                headerRoutes.push(menuItem);
-            }
+    for (const route of routes) {
+        if (route.header) {
+            headerRoutes.push(route);
         }
     }
 

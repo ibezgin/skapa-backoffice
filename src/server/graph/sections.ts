@@ -5,29 +5,13 @@ import { makeExecutableSchema } from "graphql-tools";
 import { mergeResolvers } from "@graphql-tools/merge";
 import { mergeTypeDefs } from "@graphql-tools/merge";
 import { authenticationSubSchema } from "./auth";
-import { dictionaryBrandSubSchema } from "./sections/dictionary/brand";
-import { dictionaryCarPartSubSchema } from "./sections/dictionary/car-part";
-import { dictionaryModelsSubSchema } from "./sections/dictionary/models";
-import { dictionaryServiceSubSchema } from "./sections/dictionary/service";
-import { dictionaryUsersSubSchema } from "./sections/dictionary/users";
-import { proposalCarsSubSchema } from "./sections/proposal/cars";
-import { proposalClientsSubSchema } from "./sections/proposal/clients";
-import { proposalSubSchema } from "./sections/proposal/proposal";
-import { reportEveryDaySubSchema } from "./sections/report/every-day";
-import { reportTurnoverSubSchema } from "./sections/report/turnover";
+import { usersSubSchema } from "./sections/users";
+import { promoCodesSubSchema } from "./sections/promocodes";
 
 export const sections: SubSchema[] = [
-    dictionaryBrandSubSchema,
-    dictionaryModelsSubSchema,
-    dictionaryServiceSubSchema,
-    dictionaryCarPartSubSchema,
-    dictionaryUsersSubSchema,
-    proposalClientsSubSchema,
+    usersSubSchema,
     authenticationSubSchema,
-    proposalCarsSubSchema,
-    proposalSubSchema,
-    reportEveryDaySubSchema,
-    reportTurnoverSubSchema,
+    promoCodesSubSchema,
 ];
 
 export const schemas: SubSchema[] = [...sections, querySubSchema];

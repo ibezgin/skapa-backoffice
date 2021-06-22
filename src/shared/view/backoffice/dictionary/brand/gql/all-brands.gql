@@ -1,8 +1,0 @@
-query AllBrand {
-    brand {
-        allBrands {
-            id
-            title
-        }
-    }
-}

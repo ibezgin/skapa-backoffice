@@ -14,7 +14,7 @@ const app = express();
 
 const WEBPACK_PORT =
     process.env.WEBPACK_PORT ||
-    (!isNaN(Number(process.env.PORT)) ? Number(process.env.PORT) + 1 : 8501);
+    (!isNaN(Number(process.env.PORT)) ? Number(process.env.PORT) + 1 : 8502);
 
 const DEVSERVER_HOST = process.env.DEVSERVER_HOST || "http://localhost";
 
